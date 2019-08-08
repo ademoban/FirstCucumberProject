@@ -11,3 +11,4 @@ Feature: As user I want to login under different roles
       Given user is on the landing page
       Then user logs in with "wrong" username and "wrong" password
       And user verfies "Invalid user name or password." warning message is displayed
+      Then user quits

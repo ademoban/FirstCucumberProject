@@ -32,6 +32,11 @@ public class LoginStepDefinitions {
     public void user_verifies_that_page_name_is_displayed(String expected) {
         Assert.assertEquals(expected,  pages.dashboardPage().getPageSubTitle());
     }
+    @Then("user quits")
+    public void user_quits() {
+        Driver.closeDriver();
+    }
+
     @Then("user logs in with {string} username and {string} password")
     public void user_logs_in_with_username_and_password(String string, String string2) {
         pages.loginPage().login(string, string2);
@@ -41,8 +46,4 @@ public class LoginStepDefinitions {
    Assert.assertTrue(pages.loginPage().getErrorMessage().equalsIgnoreCase(string));
     }
 
-    @Then("user quits")
-    public void user_quits() {
-        Driver.closeDriver();
-    }
 }
