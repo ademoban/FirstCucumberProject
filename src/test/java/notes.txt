@@ -1,0 +1,171 @@
+Today is 8/10/2019
+Couple:
+    Sorry about noise, a/c doesn't work well. It's not us, property management working on this.
+###############################
+ Tomorrow is holiday - class is canceled!
+##########################
+    Since many people asking about review on testng framework, I will do it on Thursday (office hour).
+    log4j, maven build, profiles, flow, report, etc.
+    Again, main framework is based on Cucumber. Most of the features that were new and not clear, will be used again for cucumber framework.
+#############################################
+    Questions: please ask questions during the class only related to the class.
+#############################################
+
+    If you have an issue:
+    1. Google it first. (The most important skill at work.)
+    2. Post in the chat.
+    3. Then ask me.
+#############################################
+    Agenda:
+        Tags
+        Hook
+        Again step definition parameters
+        Screenshoot
+        Basic cucumber report
+        (it's not extent report, this reports will be created automatically. We just have to insert one line of code and that's it).
+###################
+Tags allows to run specific scenarios in cucumber and ignore others. Usually, we used tags to specify in which version of the application feature was developed.
+Also, it's preferable to put tag with a use story, that is coming from jira,  number on top of Feature.
+@VYT-4121
+Feature: Login
+That means we have corresponded jira issue.
+Also we can use tag @smoke in order to label scenarios for smoke test.
+In project, we had separate feature for smoke test.So I didn't use tags to mark scenarios that belongs to the smoke test.
+In case of vytrack, we can label all scenarios that use @driver, @salesmanager and then in the runner we can specify that we want run all scenarios only for driver.
+We can create couple cucumber runners.
+We can put multiple tags on top of scenario and feature.
+If tag will be on top of feature - this tag will be applicable to all scenarios.
+ tags = {"not @negative"} - new format to ignore.
+tags = {"~@negative"} - that means, scenarios with tag @negative will be ignored.
+        ~ - tilde
+any tag that has tilde, will be ignored.
+If you want run all scenarios except those who have tag @negative, juts put ~.
+step definitions have save name as tests steps. Methods are written with snake case.
+Given login as driver
+step def
+@Given("login as driver")
+public void login_as_driver(){
+
+}
+######
+next topic is a hook.
+In simple words, hook runs before and after every scenario in cucumber. Very similar to @BeforeMethod and @AfterMethod in testng.
+Feature file = agile story
+Scenario = test
+In cucumber, we can have certain logic/methods executable before and after every cucumber scenario.
+Hook class must be located under step definitions package. Or, you you want to have it under different package, you need to specify inside a runner class glue for package with hook.
+In my framework, we had separate package for hook. It call testsetupandteardown. Name can be different. Not only Hook.java.
+There are 2 hooks:
+@Before - that runs before scenario
+and
+@After - after scenario
+these annotations are coming from cucumber not from junit or testng!
+Hooks can be configured. We can make runnable hooks only for certain annotations.
+Hooks it's like a test base
+package com.vytrack.step_definitions;
+import cucumber.api.java.After;
+import cucumber.api.java.Before;
+public class Hook {
+
+    @Before
+    public void setup(){
+
+    }
+
+
+    @After
+    public void teardown(){
+
+    }
+}
+To run scenarios that have tags:
+tags = {"@storemanager or @negative"},
+If you provide incorrect tags:
+0 Scenarios
+0 Steps
+0m0.213s
+That means cucumber cannot find scenarios/features with given tags.
+src/test/resources/features
+ tags = {"@storemanager and @negative"},
+ This will work only if scenario has both tags.
+  tags = {"@storemanager or @negative"},
+  This will work if scenarios has either @storemanager or @negative.
+ Hook runs for every scenario. Regardless scenario status pass/fail, hook will work.
+ Except dryRun.
+ ##############
+ What if we want to run hook only for scenarios with specific tag?
+ we shouldn't have a default hook.
+ Otherwise, default hook will always run.
+If scenario contains a tag that is matching expected tag from addition hook method, it will run on top of default hook.
+ @Before("@storemanager") - means that this hook will work for scenarios with annotation @storemanager.
+#####
+How to change priority?
+put order:
+   @Before(order = 2)
+   Why do we have default?
+   Because it's common for all scenarios.
+   If fore some reason, default hook is no suitable for some scenarios, you should have @tag for that hook.
+   Default hook is like water. Means everyone likes it.
+   If, you need to have a special setup, use tags for all hooks.
+#### Why 2 hooks can be helpful?
+For example we have a web application. Just simple ui + back-end testing. And, you have a feature that involves external application. You need to verify not only DB
+of your application, but also, DB of that external application. You don't need connection with that DB for all scenarios. Only for 1-2 features you need a connection with DB of external application. So you can create a hook, that would establish connection with that DB, only for those specific scenarios.
+###################################
+if we have more than one hook classes under step-_definitions ? are we going to put the exact path to the specific hook class that we want to be considered?
+ - No, is other hook under same package.
+ If other hook, located in different package, you have to provide a path to that hook package in the glue.
+ IN my framework, we had 2 hook classes:
+ -Only for Before hooks
+ -Only for After hooks
+###########################
+package com.vytrack.step_definitions;
+import cucumber.api.Scenario;
+import cucumber.api.java.After;
+import cucumber.api.java.Before;
+public class Hook {
+    //default that runs for any scenario
+    @Before(order = 2)
+    public void setup(Scenario scenario){
+        System.out.println(scenario.getSourceTagNames());
+        System.out.println(scenario.getName());
+        System.out.println("BEFORE");
+    }
+
+    @After(order = 2)
+    public void teardown(){
+        System.out.println("AFTER");
+    }
+
+    @After(value = "@storemanager", order = 1)
+    public void teardownForStoreManager(){
+        System.out.println("AFTER FOR STORE MANAGER");
+    }
+    //this hook will work
+    //only for scenarios with a tag @storemanager
+    //also, it will run before default hook
+    //because of priority
+    @Before(value = "@storemanager", order = 1)
+    public void setupForStoreManager(Scenario scenario){
+        System.out.println("BEFORE FOR STORE MANAGER");
+    }
+}
+###########################
+If scenario failed, how we gonna take a screen shot?
+We have Scenario interface that provides information regarding scenario that currently running.
+ * // Embed a screenshot. See your UI automation tool's docs for details about how to take a screenshot.
+     * scenario.embed(pngBytes, "image/png");
+     * }
+Comeback at 3:22.
+1 Scenarios (1 undefined)
+3 Steps (2 skipped, 1 undefined)
+skipped - ok
+undefined - requires step definition
+And user verifies that "Quick Launchpad" page name is displayed
+ @Then("user verifies that {string} page name is displayed")
+   public void user_verifies_that_page_name_is_displayed(String expected) {
+        Assert.assertEquals(expected,  pages.dashboardPage().getPageSubTitle());
+    }
+
+   Any word inside double quotes "", will be treated not as a text, as a parameter. It allows us to reuse this step with different values.
+Anything in "" will be a string parameter.
+Any number  will be a treated as an Integer parameter.

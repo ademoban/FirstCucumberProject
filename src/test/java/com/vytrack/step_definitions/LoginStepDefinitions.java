@@ -20,7 +20,7 @@ public class LoginStepDefinitions {
     Pages pages = new Pages();
     @Given("user is on the landing page")
     public void user_is_on_the_landing_page() {
-        pages.loginPage().goLandingPage();
+        pages.loginPage().goToLandingPage();
     }
     @Then("user logs in as a store manager")
     public void user_logs_in_as_a_store_manager() {
@@ -32,10 +32,7 @@ public class LoginStepDefinitions {
     public void user_verifies_that_page_name_is_displayed(String expected) {
         Assert.assertEquals(expected,  pages.dashboardPage().getPageSubTitle());
     }
-    @Then("user quits")
-    public void user_quits() {
-        Driver.closeDriver();
-    }
+
 
     @Then("user logs in with {string} username and {string} password")
     public void user_logs_in_with_username_and_password(String string, String string2) {
@@ -45,5 +42,19 @@ public class LoginStepDefinitions {
     public void user_verfies_warning_message_is_displayed(String string) {
    Assert.assertTrue(pages.loginPage().getErrorMessage().equalsIgnoreCase(string));
     }
+
+    @Then("user logs in as a driver")
+    public void user_logs_in_as_a_driver() {
+        String username = ConfigurationReader.getProperty("driverusername");
+        String password = ConfigurationReader.getProperty("driverpassword");
+      pages.loginPage().login("username","password");
+    }
+
+    @When("user logs in as a {string}")
+    public void user_logs_in_as_a(String role) {
+    pages.loginPage().login(role);
+    }
+
+
 
 }
