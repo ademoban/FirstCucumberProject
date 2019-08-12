@@ -1,0 +1,8 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Online Spring 2019">
+   <test name="Cukes Runner">
+       <classes>
+           <class name="com.vytrack.runners.CukesRunner"></class>
+       </classes>
+   </test>
+</suite>
