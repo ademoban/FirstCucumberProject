@@ -54,7 +54,13 @@ public class LoginStepDefinitions {
     public void user_logs_in_as_a(String role) {
     pages.loginPage().login(role);
     }
+    @Then("user select any car")
+    public void user_select_any_car() {
+      pages.vehiclesPage().cars.click();
+    }
 
-
-
+    @Then("user verifies {string} is displayed")
+    public void user_verifies_is_displayed(String string) {
+     Assert.assertTrue(pages.dashboardPage().getPageSubTitle().equals("cnd0141453"));
+    }
 }
