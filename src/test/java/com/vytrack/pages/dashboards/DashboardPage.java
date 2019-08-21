@@ -7,4 +7,9 @@ import org.openqa.selenium.By;
 
 public class DashboardPage extends BasePage {
 
+    public String getPageTitle(){
+        waitUntilLoaderScreenDisappear();
+        return Driver.getDriver().getTitle();
+    }
+
 }
