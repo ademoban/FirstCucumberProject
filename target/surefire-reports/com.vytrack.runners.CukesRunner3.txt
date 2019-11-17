@@ -1,0 +1,7 @@
+-------------------------------------------------------------------------------
+Test set: com.vytrack.runners.CukesRunner3
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.003 s <<< FAILURE! - in com.vytrack.runners.CukesRunner3
+initializationError(com.vytrack.runners.CukesRunner3)  Time elapsed: 0.003 s  <<< ERROR!
+java.lang.IllegalArgumentException: Not a file or directory: C:\OnlineSpring2019Cucumber\src\test\resources\features\loging
+

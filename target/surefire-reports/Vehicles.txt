@@ -1,0 +1,7 @@
+-------------------------------------------------------------------------------
+Test set: Vehicles
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 1, Errors: 0, Skipped: 1, Time elapsed: 22.747 s <<< FAILURE! - in Vehicles
+Access Vehicle page as admin(Vehicles)  Time elapsed: 9.326 s  <<< FAILURE!
+org.junit.ComparisonFailure: expected:<[All Vehicle Contract]> but was:<[Quick Launchpad]>
+

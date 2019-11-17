@@ -1,0 +1,14 @@
+-------------------------------------------------------------------------------
+Test set: Create a Car
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 69.512 s <<< FAILURE! - in Create a Car
+Create a regular car (with list of maps)(Create a Car)  Time elapsed: 18.255 s  <<< ERROR!
+org.openqa.selenium.ElementClickInterceptedException: 
+element click intercepted: Element <button type="submit" class="btn btn-success action-button" data-action="{&quot;route&quot;:&quot;oro_entity_view&quot;,&quot;params&quot;:{&quot;entityName&quot;:&quot;Extend_Entity_Carreservation&quot;,&quot;id&quot;:&quot;$id&quot;}}">...</button> is not clickable at point (974, 127). Other element would receive the click: <div class="loader-mask shown">...</div>
+  (Session info: chrome=77.0.3865.75)
+Build info: version: '3.141.59', revision: 'e82be7d358', time: '2018-11-14T08:17:03'
+System info: host: 'DESKTOP-O903K93', ip: '10.0.0.42', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '11.0.2'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 77.0.3865.75, chrome: {chromedriverVersion: 77.0.3865.40 (f484704e052e0..., userDataDir: C:\Users\ademo\AppData\Loca...}, goog:chromeOptions: {debuggerAddress: localhost:58602}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: XP, platformName: XP, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify}
+Session ID: 915cf7bd05bc3340760446aa49ba15c3
+
