@@ -1,5 +1,5 @@
 @calendar_events
-Feature: All Calendar Events
+Feature: All Calendar Eventss
   As user I want to be able to see all calendar events as a table
 
 
